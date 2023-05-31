@@ -1,0 +1,6 @@
+[book]
+authors = ["Sped0n"]
+language = "en"
+multilingual = false
+src = "src"
+title = "data-structure"
