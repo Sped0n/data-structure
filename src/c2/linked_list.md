@@ -34,7 +34,7 @@ bool InitLinkList(LinkList& L){
     if( L == nullptr){                    // 内存不足，分配失败
         return false;
     }
-    L->next = nullptr;                    // 头结点之后暂时没有任何结点
+    L -> next = nullptr;                    // 头结点之后暂时没有任何结点
     return true;
 }
 ```
@@ -63,13 +63,13 @@ bool InitLinkList(LinkList& L){
 // 请配图食用！！！
 LinkList List_HeadInsert(LinkList& L, int n){
     L = (LinkList)malloc(sizeof(LNode));
-    L->next = nullptr;                              // 创建一个带头结点的空链表
+    L -> next = nullptr;                              // 创建一个带头结点的空链表
     for (int i = 0; i < n; i++) {
         LNode* s = (LNode*)malloc(sizeof(LNode));   // 新建一个结点
-        cin >> s->data;
+        cin >> s-> data;
 
-        s->next = L->next;                          // 头结点后插入新结点
-        L->next = s;        
+        s -> next = L -> next;                          // 头结点后插入新结点
+        L -> next = s;        
     }
     return L;
 }
@@ -86,16 +86,16 @@ LinkList List_HeadInsert(LinkList& L, int n){
 ```c
 LinkList List_TailInsert(ListLink& L, int n){
     L = (LinkList)malloc(sizeof(LNode));
-    L->next = nullptr;
+    L -> next = nullptr;
     LNode* tail = (LNode*)malloc(sizeof(LNode));  // 生成表尾指针
     tail = L;            //表尾指针指向头结点
     for( int i = 0; i < n; i++){
         LNode* s = (LNode*)malloc(sizeof(LNode)); // 新建结点
         cin >> s->data;
-        tail->next = s;                           // 将尾指针的下一个结点指向新建结点
+        tail -> next = s;                         // 将尾指针的下一个结点指向新建结点
         tail = s;                                 // 将新建结点设为表尾
     }
-    tail->next = nullptr;                         // 尾指针后继设为空
+    tail -> next = nullptr;                       // 尾指针后继设为空
     reutrn L;    
 }
 ```
@@ -107,7 +107,7 @@ LinkList List_TailInsert(ListLink& L, int n){
 ```c
 LNode* GetElem(LinkList L,int i){
     int count = 1;
-    LNode* p = L->next;         // 指针p指向头结点
+    LNode* p = L -> next;         // 指针p指向头结点
     if( i == 0){                // 相当于返回头结点
         return L;
     }
@@ -115,8 +115,8 @@ LNode* GetElem(LinkList L,int i){
         return nullptr;          // i无效，返回空    
     }
     while( p && count < i){
-        p = p->next;
-        count ++;
+        p = p -> next;
+        count++;
     }
     return p;
 }
@@ -128,9 +128,9 @@ LNode* GetElem(LinkList L,int i){
 
 ```c
 LNode* LocateElem(LinkList L, ElemType e){
-    LNode* p = L->next;                    // 指针p指向头结点
+    LNode* p = L -> next;                    // 指针p指向头结点
     while( p != nullptr && p->data != e){  // 遍历匹配
-        p = p->next;
+        p = p -> next;
     }
     return p;
 }
@@ -148,9 +148,9 @@ LNode* LocateElem(LinkList L, ElemType e){
 bool ListLNode_Insert(LinkList& L, int i, ElemType e){
     LNode* p = GetElem(L, i-1);                //找到插入位置的前驱结点
     LNode* s = (LNode*)malloc(sizeof(LNode));
-    s->data = e;
-    s->next = p->next;
-    p->next = s;
+    s -> data = e;
+    s -> next = p -> next;
+    p -> next = s;
     return true;
 }
 ```
@@ -163,14 +163,92 @@ bool ListLNode_Insert(LinkList& L, int i, ElemType e){
 bool ListLNode_ForwardInsert(LinkList& L, int i, ElemType e){
     LNode* p = GetElem(L,i);                  // 找到第i个元素
     LNode* s = (LNode*)malloc(sizeof(LNode)); // 分配新数组的空间
-    s->data = e;
-    s->next = p->next;
-    p->next = s;
-    swap(s->data,p->data);
+    s -> data = e;
+    s -> next = p->next;
+    p -> next = s;
+    swap(s->data,p->data);                    // 数据域交换
     return true;    
 }
 ```
 
-
-
 其实就是在该节点后面插入一个新结点，再将两个结点的数据域交换，就轻松的完成了后插。
+
+### 删除结点
+
+#### 不清空结点内容
+
+```c
+bool ListLNode_Delete(LinkList& L, int i){
+    LNode* p = GeElem(L, i - 1);            // 找到第i-1个元素,即*q的前驱结点
+    LNode* q = p -> next;
+    p -> next = q -> next;
+    free(q);
+    return true;
+}
+```
+
+<u>找到需要删除结点的前一个结点</u>，将这个前向结点指向删除结点的下一个结点，相当于<u>跳过</u>这个删除结点，但并没有清空内容。
+
+#### 清空结点内容
+
+```c
+bool ListLNode_Complete_Delete(LinkList& L, int i){
+    LNode* p = GeElem(L, i);            // 找到第i-1个元素,即*q的前驱结点
+    LNode* q = p -> next;
+    p -> data = q -> data;
+    p -> next = q -> next;
+    free(q);
+    return true;
+}
+```
+
+<u>找到需要删除的结点</u>，将其的内容和指向改为下一个元素，相当于用下一个结点<u>替代</u>这个删除结点，清空了内容。
+
+### 求表长
+
+```c
+int LinkListLength(LinkList L){
+    LNode* p = L -> next;
+    int len = 1;
+    while( p != nullptr){ // 遍历并且自加累积器
+        p = p -> next;
+        len++;
+    }
+    return len;    
+}
+```
+
+### 显示链表所有结点信息
+
+```c
+void List_Display(LinkList L){
+    LNode* p = L -> next;
+    while( p != nullptr){
+        cout << p -> data << " ";
+        p = p -> next;
+    }
+    cout << endl;
+}
+```
+
+### 逆转链表
+
+#### 双指针法
+
+创建两个指针，`cur`和`pre`，`pre` 在右，`cur`在左。每次让`pre`的`next`指针指向`cur`，完成一次局部反转，之后两个指针同时向右移，直至链表尾。
+
+![img](https://img.sped0nwen.com/image/2023/06/02/ijox5n-0.webp)
+
+```c
+void List_Reverse(LinkList& L){
+    LNode* cur = Nullptr;          // 最开始cur指向空
+    LNode* pre = L -> next;        // pre指向链表中第一个存储信息的结点
+    while( pre != nullptr ){
+        LNode* temp = pre -> next; // 创建临时结点temp，提前保存下一个结点的地址
+        pre -> next = cur;         // pre指向cur
+        cur = pre;                 // 覆盖cur
+        pre = temp;
+    }
+}
+```
+
