@@ -26,7 +26,7 @@ bool InitLinklist(LinkList& L) {
 }
 ```
 
-#### 带头节点的单链表
+#### 带头结点的单链表
 
 ```c
 bool InitLinkList(LinkList& L){
@@ -240,14 +240,15 @@ void List_Display(LinkList L){
 ![img](https://img.sped0nwen.com/image/2023/06/02/ijox5n-0.webp)
 
 ```c
-void List_Reverse(LinkList& L){
-    LNode* cur = Nullptr;          // 最开始cur指向空
-    LNode* pre = L -> next;        // pre指向链表中第一个存储信息的结点
-    while( pre != nullptr ){
-        LNode* temp = pre -> next; // 创建临时结点temp，提前保存下一个结点的地址
-        pre -> next = cur;         // pre指向cur
-        cur = pre;                 // 覆盖cur
-        pre = temp;
+void Linked_List_Reverse(LinkList& L){
+    LNode *curr = L;
+    LNode *prev = NULL;
+    LNode *next = NULL;
+    while (curr != NULL) {
+        next = curr -> next;
+        curr -> next = prev;
+        prev = curr;
+        curr = next;
     }
 }
 ```

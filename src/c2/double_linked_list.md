@@ -21,52 +21,17 @@ typedef struct DNode{
 
 ## 双链表上的基本操作
 
-在C语言中，双链表可以通过结构体表示，每个节点包含三个主要部分：前一个节点、当前节点、后一个节点。初始化一个双链表的步骤如下：
-
-1.首先定义双链表的结构体。例如：
-
-```
-struct Node{
-    int value;
-    struct Node *prev; //前一个结点指针
-    struct Node *next; //后一个结点指针
-};
-```
-
-2.然后定义一个表头，它是一个指向结构体的指针类型，并用malloc函数动态分配内存。
-
-```
-struct Node *head=NULL;//表头
-head = (struct Node *)malloc(sizeof(struct Node));
-head->prev=NULL;
-head->next=NULL;
-```
-
-3.最后，我们定义一个链表节点，并把它插入到链表中。例如：
-
-```
-struct Node *p=NULL;//定义一个新的节点p
-p = (struct Node *)malloc(sizeof(struct Node));
-p->value=1;
-
-head->next=p; //将节点p插入到链表中
-p->prev=head;
-p->next=NULL; 
-```
-
-这样就可以初始化一个双链表了。
-
 ### 初始化
 
 ```c
 bool InitDoubleLinkedList(DLinkList& L) {
-  D = (struct Node *)malloc(sizeof(DNode)); // 生成一个头结点
-  if (D == nullptr) {                       // 内存不足，分配失败
-    return false;
-  }
+	D = (struct Node *)malloc(sizeof(DNode)); // 生成一个头结点
+	if (D == nullptr) {                       // 内存不足，分配失败
+		return false;
+	}
 	D -> prev = NULL;                         // 头结点之后暂时没有任何结点
 	D -> next = NULL;
-  return true;
+	return true;
 }
 ```
 
@@ -79,7 +44,7 @@ bool InitDoubleLinkedList(DLinkList& L) {
 ```c
 bool DLinkList_Insert(DLinkList& L,ElemTyep c){
     DNode* back;
-  	front = back -> prev;
+    front = back -> prev;
     /* 先检查位置是否合法...  */
     DNode* s = (DNode*)malloc(sizeof(DNode));
     s -> data = c;
@@ -143,14 +108,41 @@ bool DLinkList_Delete(DLinkList& L){
 }
 ```
 
-如果是删除指针p指向的结点的后继结点，指针q指向后继结点，也就是后删：
+如果是删除指针p指向的结点的后继结点，也就是后删：
 
 ```c
 bool DLinkList_Delete(DLinkList& L){
-    DNode *p, *q;
-    p -> next = q -> next;
-    q -> next -> prior = p;
+    DNode *p;
+    back = p -> next;
+    p -> next = back -> next;
+    back_of_the_back = back -> next;
+    back_of_the_back -> prior = p;
     free(q);
 }
 ```
+
+### 逆转
+```c
+void Double_Linked_List_Reverse(DLinkList& L) {
+    DNode *curr = L;
+    DNode *prev = NULL;
+    DNode *next = NULL;
+    while (cur != NULL) {
+    	next = curr -> next;
+        curr -> next = prev;
+        curr -> prev = next;
+        prev = current;
+        current = next;
+    }
+}
+```
+
+### 其他操作
+
+继承自单链表
+
+* [序号索引查找](./linked_list.md#序号索引查找)
+* [按值查找](./linked_list.md#按值查找)
+* [求表长](./linked_list.md#求表长)
+* [显示所有结点信息](./linked_list.md#显示链表所有结点信息)
 
