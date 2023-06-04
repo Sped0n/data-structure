@@ -13,3 +13,5 @@
   - [双链表](./c2/double_linked_list.md)
   - [循环链表](./c2/circular_linked_list.md)
   - [区别](./c2/difference.md)
+- [栈和队列](./c3/README.md)
+  - [栈](./c3/stack.md)

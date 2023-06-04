@@ -26,7 +26,7 @@ typedef struct DNode{
 ```c
 bool InitDoubleLinkedList(DLinkList& L) {
 	D = (struct Node *)malloc(sizeof(DNode)); // 生成一个头结点
-	if (D == nullptr) {                       // 内存不足，分配失败
+	if (D == NULL) {                          // 内存不足，分配失败
 		return false;
 	}
 	D -> prev = NULL;                         // 头结点之后暂时没有任何结点
@@ -43,10 +43,10 @@ bool InitDoubleLinkedList(DLinkList& L) {
 
 ```c
 bool DLinkList_Insert(DLinkList& L,ElemTyep c){
-    DNode* back;
+    DNode *back;
     front = back -> prev;
     /* 先检查位置是否合法...  */
-    DNode* s = (DNode*)malloc(sizeof(DNode));
+    DNode *s = (DNode*)malloc(sizeof(DNode));
     s -> data = c;
     //第一步：结点s的prior指针指向左边的结点
     s -> prev = front;    
@@ -70,9 +70,9 @@ bool DLinkList_Insert(DLinkList& L,ElemTyep c){
 
 ```c
 bool DLinkList_Insert(DLinkList& L,ElemType c){
-    DNode* front;
+    DNode *front;
   	back = front -> next;
-    DNode* s = (DNode*)malloc(sizeof(DNode));
+    DNode *s = (DNode*)malloc(sizeof(DNode));
     s -> data = c;
     //第一步：将结点s 的next指针指向后继结点
     s -> next = back;
@@ -96,7 +96,7 @@ bool DLinkList_Insert(DLinkList& L,ElemType c){
 
 ```c
 bool DLinkList_Delete(DLinkList& L){
-    DNode* p;
+    DNode *p;
   	front = p -> prev;
   	back = p -> next; 
     //第一步：将结点b的前驱结点的next指针指向结点c
@@ -128,9 +128,10 @@ void Double_Linked_List_Reverse(DLinkList& L) {
     DNode *prev = NULL;
     DNode *next = NULL;
     while (cur != NULL) {
-    	next = curr -> next;
-        curr -> next = prev;
-        curr -> prev = next;
+    	next = curr -> next;    // 暂存next
+        curr -> next = prev;    // 拿prev取代next，为什么不拿curr -> prev是因为需要空头结点
+        curr -> prev = next;    // 拿next替代prev
+        // 变量移位
         prev = current;
         current = next;
     }
