@@ -55,7 +55,7 @@ typedef struct {
 
   栈不满时，<u>先</u>栈指针加1，<u>再</u>送值到栈顶元素；
 
-  > 这个先后顺序参考[下面的程序](#进栈)就能明白，具体说就是如果先送值，这个时候的索引还没加一，是无效的。
+  > 这个先后顺序参考[下面的程序](#入栈)就能明白，具体说就是如果先送值，这个时候的索引还没加一，是无效的。
 
 * 出栈操作：
 
@@ -72,19 +72,21 @@ typedef struct {
   * 栈空：`S.top == -1`
   * 栈满：`S.top == MAXSIZE - 1`
 
-### 顺序栈的基本运算
+### 顺序栈的基本操作
 
 ![img](https://img.sped0nwen.com/image/2023/06/04/sy2n4y-0.webp)
 
 #### 初始化
 
 ```c
-void InitStack(SqlStack &S) {
+SqlStack InitStack() {
+    SqlStack s;
     S.top = -1;     // 初始化栈顶索引
+    return s;
 }
 ```
 
-#### 判栈空
+#### 判空
 
 ```c
 bool StackEmpty(SqlStack &S) {
@@ -95,7 +97,7 @@ bool StackEmpty(SqlStack &S) {
 }
 ```
 
-#### 进栈
+#### 入栈
 
 ```c
 bool Push(SqlStack &S, Elemtype e) {
@@ -111,13 +113,13 @@ bool Push(SqlStack &S, Elemtype e) {
 #### 出栈
 
 ```c
-bool Pop(SqlStack &S, Elemtype &e) {
+Elemtype Pop(SqlStack &S) {
     if (S.top == -1) {               // 栈空，报错
         return false;
     }
-    e = S.data[S.top];
+    Elemtype temp = S.data[S.top];
     S.top -= 1;
-    return true;
+    return temp;
 }
 ```
 
@@ -126,12 +128,11 @@ bool Pop(SqlStack &S, Elemtype &e) {
 #### 读栈顶操作
 
 ```c
-bool GetTop(SqlStack &S, ElemType &e) {
+Elemtype GetTop(SqlStack &S) {
     if (S.top == -1) {                // 栈空，报错
-        return false;
+        return NULL;
     }
-    e = S.data[S.top];
-    return true;
+    return S.data[S.top];
 }
 ```
 
@@ -140,3 +141,81 @@ bool GetTop(SqlStack &S, ElemType &e) {
 采用链式存储的栈称为**链栈**，链栈的优点是便于多个栈共享存储空间和提高其效率，且不存在栈满上溢的情况。通常采用<u>单链表</u>实现，并规定<u>所有操作都是在单链表的表头</u>进行的。这里规定<u>链栈没有头结点</u>，`top`指向栈顶元素。
 
 ![img](https://img.sped0nwen.com/image/2023/06/04/u7wwsl-0.webp)
+
+### 链栈的实现
+
+```c
+typedef struct SNode{
+    ElemType data;
+    struct LinkNode* next;
+}SNode, *LinkStack;
+```
+
+### 链栈的基本操作
+
+#### 初始化
+
+```c
+LinkStack InitLinkStack() {
+    LinkStack S = (LinkStack)malloc(sizeof(struct SNode));
+    S -> next = NULL;
+    return S;
+}
+```
+
+#### 判空
+
+```c
+bool LinkStackEmpty(LinkStack &S) {
+    return S -> next == NULL;
+}
+```
+
+#### 计算链栈长度
+
+```c
+int LinkStackLength(LinkStack &S) {
+    SNode *p = S -> next;
+    int len = 0;
+    while (p != NULL) {
+        p = p -> next;
+        len++;
+    }
+}
+```
+
+#### 入栈
+
+```c
+bool Push(LinkStack &S, Elemtype e) {
+    SNode *NewNode = (SNode*)malloc(sizeof(struct SnNode));
+    if （NewNode == NULL) {
+        return false;        // 结点分配失败
+    }
+    NewNode -> data = e;
+    NewNode -> next = S;
+    S = NewNode
+}
+```
+
+#### 出栈
+
+```c
+Elemtype Pop(LinkStack &S) {
+    LinkStack *temp = S;
+    S = S -> next;
+    return temp -> data;
+}
+```
+
+##### 读栈顶操作
+
+```c
+Elemtype GetTop(LinkStack &S) {
+    if (S -> next == NULL) {
+        return NULL;
+    }
+    return S -> data;
+}
+```
+

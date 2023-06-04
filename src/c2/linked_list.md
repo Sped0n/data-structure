@@ -9,7 +9,7 @@
 ```c
 typedef struct LNode{
     ElemType data;
-    struct LNode* next;
+    struct LNode *next;
 }LNode, *LinkList;          // LNode,LinkList 其实是一样的，只是表示结点和链表更方便
 ```
 
@@ -20,22 +20,22 @@ typedef struct LNode{
 #### 不带头结点的单链表
 
 ```c
-bool InitLinklist(LinkList& L) {
-    L = nullptr;
-    return true;
+LinkList InitLinklist() {
+    Lnode* L = NULL;
+    return L;
 }
 ```
 
 #### 带头结点的单链表
 
 ```c
-bool InitLinkList(LinkList& L){
-    L = (Lnode*)malloc(sizeof(LNode));    // 生成一个头结点
-    if( L == nullptr){                    // 内存不足，分配失败
+LinkList InitLinkList(){
+    Lnode* L = (Lnode*)malloc(sizeof(LNode));    // 生成一个头结点
+    if( L == NULL){                              // 内存不足，分配失败
         return false;
     }
-    L -> next = nullptr;                    // 头结点之后暂时没有任何结点
-    return true;
+    L -> next = NULL;                             // 头结点之后暂时没有任何结点
+    return L;
 }
 ```
 
@@ -61,14 +61,13 @@ bool InitLinkList(LinkList& L){
 
 ```c
 // 请配图食用！！！
-LinkList List_HeadInsert(LinkList& L, int n){
+LinkList List_HeadInsert(LinkList &L, int n){
     L = (LinkList)malloc(sizeof(LNode));
-    L -> next = nullptr;                              // 创建一个带头结点的空链表
+    L -> next = NULL;                              // 创建一个带头结点的空链表
     for (int i = 0; i < n; i++) {
-        LNode* s = (LNode*)malloc(sizeof(LNode));   // 新建一个结点
+        LNode* s = (LNode*)malloc(sizeof(LNode));  // 新建一个结点
         cin >> s-> data;
-
-        s -> next = L -> next;                          // 头结点后插入新结点
+        s -> next = L -> next;                     // 头结点后插入新结点
         L -> next = s;        
     }
     return L;
@@ -84,18 +83,18 @@ LinkList List_HeadInsert(LinkList& L, int n){
 在尾插法的实现过程中，要创建一个链表尾指针，标注链表的最后一个节点，这样就与新加入的结点联系起来，方便操作。
 
 ```c
-LinkList List_TailInsert(ListLink& L, int n){
+LinkList List_TailInsert(ListLink &L, int n){
     L = (LinkList)malloc(sizeof(LNode));
-    L -> next = nullptr;
-    LNode* tail = (LNode*)malloc(sizeof(LNode));  // 生成表尾指针
+    L -> next = NULL;
+    LNode *tail = (LNode*)malloc(sizeof(LNode));  // 生成表尾指针
     tail = L;            //表尾指针指向头结点
     for( int i = 0; i < n; i++){
-        LNode* s = (LNode*)malloc(sizeof(LNode)); // 新建结点
-        cin >> s->data;
+        LNode *s = (LNode*)malloc(sizeof(LNode)); // 新建结点
+        cin >> s ->data;
         tail -> next = s;                         // 将尾指针的下一个结点指向新建结点
         tail = s;                                 // 将新建结点设为表尾
     }
-    tail -> next = nullptr;                       // 尾指针后继设为空
+    tail -> next = NULL;                          // 尾指针后继设为空
     reutrn L;    
 }
 ```
@@ -105,16 +104,16 @@ LinkList List_TailInsert(ListLink& L, int n){
 ### 序号索引查找
 
 ```c
-LNode* GetElem(LinkList L,int i){
+LNode* GetElem(LinkList &L,int i){
     int count = 1;
-    LNode* p = L -> next;         // 指针p指向头结点
-    if( i == 0){                // 相当于返回头结点
+    LNode *p = L -> next;         // 指针p指向头结点
+    if (i == 0) {                 // 相当于返回头结点
         return L;
     }
-    if( i < 1){                        
-        return nullptr;          // i无效，返回空    
+    if (i < 1) {                        
+        return NULL;              // i无效，返回空    
     }
-    while( p && count < i){
+    while (p && count < i) {
         p = p -> next;
         count++;
     }
@@ -127,9 +126,9 @@ LNode* GetElem(LinkList L,int i){
 ### 按值查找
 
 ```c
-LNode* LocateElem(LinkList L, ElemType e){
-    LNode* p = L -> next;                    // 指针p指向头结点
-    while( p != nullptr && p->data != e){  // 遍历匹配
+LNode* LocateElem(LinkList &L, ElemType e){
+    LNode *p = L -> next;                    // 指针p指向头结点
+    while (p != NULL && p->data != e) {   // 遍历匹配
         p = p -> next;
     }
     return p;
@@ -145,8 +144,8 @@ LNode* LocateElem(LinkList L, ElemType e){
 ![img](https://img.sped0nwen.com/image/2023/06/02/hftzmx-0.webp)
 
 ```c
-bool ListLNode_Insert(LinkList& L, int i, ElemType e){
-    LNode* p = GetElem(L, i-1);                //找到插入位置的前驱结点
+bool ListLNode_Insert(LinkList &L, int i, ElemType e){
+    LNode *p = GetElem(L, i-1);                //找到插入位置的前驱结点
     LNode* s = (LNode*)malloc(sizeof(LNode));
     s -> data = e;
     s -> next = p -> next;
@@ -160,13 +159,13 @@ bool ListLNode_Insert(LinkList& L, int i, ElemType e){
 #### 前插
 
 ```c
-bool ListLNode_ForwardInsert(LinkList& L, int i, ElemType e){
-    LNode* p = GetElem(L,i);                  // 找到第i个元素
-    LNode* s = (LNode*)malloc(sizeof(LNode)); // 分配新数组的空间
+bool ListLNode_ForwardInsert(LinkList &L, int i, ElemType e){
+    LNode *p = GetElem(L,i);                    // 找到第i个元素
+    LNode* s = (LNode*)malloc(sizeof(LNode));   // 分配新数组的空间
     s -> data = e;
     s -> next = p->next;
     p -> next = s;
-    swap(s->data,p->data);                    // 数据域交换
+    swap(s->data, p->data);                      // 数据域交换
     return true;    
 }
 ```
@@ -178,9 +177,9 @@ bool ListLNode_ForwardInsert(LinkList& L, int i, ElemType e){
 #### 不清空结点内容
 
 ```c
-bool ListLNode_Delete(LinkList& L, int i){
-    LNode* p = GeElem(L, i - 1);            // 找到第i-1个元素,即*q的前驱结点
-    LNode* q = p -> next;
+bool ListLNode_Delete(LinkList &L, int i){
+    LNode *p = GeElem(L, i - 1);            // 找到第i-1个元素,即*q的前驱结点
+    LNode *q = p -> next;
     p -> next = q -> next;
     free(q);
     return true;
@@ -192,9 +191,9 @@ bool ListLNode_Delete(LinkList& L, int i){
 #### 清空结点内容
 
 ```c
-bool ListLNode_Complete_Delete(LinkList& L, int i){
-    LNode* p = GeElem(L, i);            // 找到第i-1个元素,即*q的前驱结点
-    LNode* q = p -> next;
+bool ListLNode_Complete_Delete(LinkList &L, int i){
+    LNode *p = GeElem(L, i);            // 找到第i-1个元素,即*q的前驱结点
+    LNode *q = p -> next;
     p -> data = q -> data;
     p -> next = q -> next;
     free(q);
@@ -207,10 +206,10 @@ bool ListLNode_Complete_Delete(LinkList& L, int i){
 ### 求表长
 
 ```c
-int LinkListLength(LinkList L){
-    LNode* p = L -> next;
-    int len = 1;
-    while( p != nullptr){ // 遍历并且自加累积器
+int LinkListLength(LinkList &L){
+    LNode *p = L -> next;
+    int len = 0;
+    while (p != NULL) { // 遍历并且自加累积器
         p = p -> next;
         len++;
     }
@@ -221,9 +220,9 @@ int LinkListLength(LinkList L){
 ### 显示链表所有结点信息
 
 ```c
-void List_Display(LinkList L){
-    LNode* p = L -> next;
-    while( p != nullptr){
+void List_Display(LinkList &L){
+    LNode *p = L -> next;
+    while (p != NULL) {
         cout << p -> data << " ";
         p = p -> next;
     }
@@ -240,7 +239,7 @@ void List_Display(LinkList L){
 ![img](https://img.sped0nwen.com/image/2023/06/02/ijox5n-0.webp)
 
 ```c
-void Linked_List_Reverse(LinkList& L){
+void Linked_List_Reverse(LinkList &L){
     LNode *curr = L;
     LNode *prev = NULL;
     LNode *next = NULL;

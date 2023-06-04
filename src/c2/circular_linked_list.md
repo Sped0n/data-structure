@@ -15,20 +15,20 @@
 #### 初始化（默认带头结点）
 
 ```c
-bool InitLinkList(LinkList& L){
-    LNode* L = (LNode*)malloc(sizeof(LNode));
+LinkList InitLinkList(){
+    LNode *L = (LNode*)malloc(sizeof(LNode));
     if(L == NULL){
         return false;
     }
     L->next = L; // 和单链表的区别就在这里，next指向了自己
-    return true;
+    return L;
 }
 ```
 
 #### 判空
 
 ```c
-bool IsEmpty(LinkList& L) {
+bool IsEmpty(LinkList &L) {
     if(L->next == L){
         return true;
     }
@@ -39,7 +39,7 @@ bool IsEmpty(LinkList& L) {
 #### 判断是否为表尾结点
 
 ```c
-bool IsTail(LinkList& L, LNode* p){
+bool IsTail(LinkList &L, LNode *p){
     if(p->next == L){     // 逻辑：表尾结点的下一个结点是头结点
         return true;
     }
@@ -52,7 +52,7 @@ bool IsTail(LinkList& L, LNode* p){
 #### 逆转
 
 ```c
-void Circular_Linked_List_Reverse(LinkList& L){
+void Circular_Linked_List_Reverse(LinkList &L){
     // L为旧表的表头，新表的表尾
     LNode *curr = L;
     LNode *prev = NULL;
@@ -96,14 +96,14 @@ void Circular_Linked_List_Reverse(LinkList& L){
 #### 初始化
 
 ```c
-bool InitDLinkList(DLinkList& L){
+DLinkList InitDLinkList(){
     DNode* L = (DNode*)malloc(sizeof(DNode));
     if( L == NULL){
         return false;
     }
     L->prior = L;
     L->next = L;
-    return true;
+    return L;
 }
 ```
 
