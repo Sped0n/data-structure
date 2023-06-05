@@ -11,7 +11,7 @@
 typedef struct {
     ElemType data[MAXSIZE];            //顺序表的元素
     int length;                        //顺序表的当前长度
-}Sqlist;
+}SqList;
 ```
 
 静态分配时，数据量小的话，会造成数组空间的浪费（因为这是一种预分配的方式！！！）；而如果是数据量大的话，就会造成溢出，进而导致程序崩溃。所以我们采用下面更灵活的方式来。
@@ -23,7 +23,7 @@ typedef struct {
 typedef struct {                    
     ElemType* data;                 //指示动态分配数组的指针
     int MAXSIZE,length;             //数组的最大容量和当前个数
-}Sqlist;
+}SqList;
 ```
 
 * C的初始化分配语句为：
@@ -45,7 +45,7 @@ typedef struct {
 
 ```c
 //初始化顺序表(静态分配)
-bool InitSqList(Sqlist &L) {
+bool InitSqList(SqList &L) {
     for (int i = 0; i < MAXSIZE; i++) {
         L.data[i] = 0;
     }
@@ -87,7 +87,7 @@ void IncreaseSize(SqList &L, int len) {
 ### 求表长
 
 ```c
-int Length(Sqlist L) {
+int Length(SqList L) {
     return L.length;
 }
 ```
@@ -95,9 +95,9 @@ int Length(Sqlist L) {
 ### 按值查找
 
 ```c
-int LocateElem(Sqlist L, ElemType e) {
-    for( int i = 0; i < L.length; i++){
-        if( e == L[i]){
+int LocateElem(SqList L, ElemType e) {
+    for (int i = 0; i < L.length; i++) {
+        if (e == L[i]) {
             return i + 1;
         }
     }
@@ -118,7 +118,7 @@ int LocateElem(Sqlist L, ElemType e) {
 ### 插入操作
 
 ```c
-bool ListInsert(Sqlist &L,int i,ElemType e) {
+bool ListInsert(SqList &L,int i,ElemType e) {
     if( i < 1 || i > L.length + 1){              //判断输入的i是否符合范围
         return false;
     }
@@ -147,7 +147,7 @@ bool ListInsert(Sqlist &L,int i,ElemType e) {
 ### 删除操作
 
 ```c
-bool ListDelete(Sqlist &L,int i,ElemType &e) {   //删除第i位上的数，并通过e返回其值
+bool ListDelete(SqList &L,int i,ElemType &e) {   //删除第i位上的数，并通过e返回其值
     if( i < 1 || i > L.length){                  //判断输入的i是否符合范围
         return false;
     }

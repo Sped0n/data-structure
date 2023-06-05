@@ -44,7 +44,7 @@
 typedef struct {
     Elemtype data[MAXSIZE];  // 存放栈中元素
     int top;                 // 栈顶元素索引
-} SqlStack;
+} SqStack;
 ```
 
 * 栈顶指针：
@@ -79,17 +79,20 @@ typedef struct {
 #### 初始化
 
 ```c
-SqlStack InitStack() {
-    SqlStack s;
+bool InitStack(SqStack &S, int maxsize=50) {
+    S.data = new Elemtype[maxsize];
+    if (S.data == NULL) {
+        return false;
+    }
     S.top = -1;     // 初始化栈顶索引
-    return s;
+    return true;
 }
 ```
 
 #### 判空
 
 ```c
-bool StackEmpty(SqlStack &S) {
+bool StackEmpty(SqStack S) {
     if (S.top == -1) {
         return true;
     }
@@ -97,10 +100,12 @@ bool StackEmpty(SqlStack &S) {
 }
 ```
 
+> 这里没做操作，所以不需要引用。
+
 #### 入栈
 
 ```c
-bool Push(SqlStack &S, Elemtype e) {
+bool Push(SqStack &S, Elemtype e) {
     if (S.top == MAXSIZE - 1) {      // 栈满，报错
         return false;
     }
@@ -113,7 +118,7 @@ bool Push(SqlStack &S, Elemtype e) {
 #### 出栈
 
 ```c
-Elemtype Pop(SqlStack &S) {
+Elemtype Pop(SqStack &S) {
     if (S.top == -1) {               // 栈空，报错
         return false;
     }
@@ -128,11 +133,12 @@ Elemtype Pop(SqlStack &S) {
 #### 读栈顶操作
 
 ```c
-Elemtype GetTop(SqlStack &S) {
+bool GetTop(SqStack &S, Elemtype &e) {
     if (S.top == -1) {                // 栈空，报错
-        return NULL;
+        return false;
     }
-    return S.data[S.top];
+    e = S.data[S.top];
+    return true;
 }
 ```
 
@@ -208,14 +214,15 @@ Elemtype Pop(LinkStack &S) {
 }
 ```
 
-##### 读栈顶操作
+#### 读栈顶操作
 
 ```c
-Elemtype GetTop(LinkStack &S) {
+bool GetTop(LinkStack &S, Elemtype &e) {
     if (S -> next == NULL) {
-        return NULL;
+        return false;
     }
-    return S -> data;
+    e = S -> data;
+    return true;
 }
 ```
 

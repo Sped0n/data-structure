@@ -146,4 +146,5 @@ void Double_Linked_List_Reverse(DLinkList& L) {
 * [按值查找](./linked_list.md#按值查找)
 * [求表长](./linked_list.md#求表长)
 * [显示所有结点信息](./linked_list.md#显示链表所有结点信息)
+* [清空整个链表](./linked_list.md#清空整个链表)
 

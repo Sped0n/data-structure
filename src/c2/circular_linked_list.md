@@ -80,6 +80,7 @@ void Circular_Linked_List_Reverse(LinkList &L){
 * [按值查找](./linked_list.md#按值查找)
 * [插入结点](./linked_list.md#插入结点)
 * [删除结点](./linked_list.md#删除结点)
+* [显示所有结点信息](./linked_list.md#显示链表所有结点信息)
 * [求表长](./linked_list.md#求表长)
 * [显示链表所有结点信息](./linked_list.md#显示链表所有结点信息)
 
@@ -96,22 +97,22 @@ void Circular_Linked_List_Reverse(LinkList &L){
 #### 初始化
 
 ```c
-DLinkList InitDLinkList(){
-    DNode* L = (DNode*)malloc(sizeof(DNode));
-    if( L == NULL){
+bool InitDLinkList(DLinkList &L){
+    L = (DNode*)malloc(sizeof(DNode));
+    if (L == NULL) {
         return false;
     }
-    L->prior = L;
-    L->next = L;
-    return L;
+    L -> prior = L;
+    L -> next = L;
+    return true;
 }
 ```
 
 #### 判空
 
 ```c
-bool IsEmpty(DLinkList& L){
-    if(L->next == L && L->prior = L){
+bool IsEmpty(DLinkList &L){
+    if (L -> next == L && L -> prior == L) {
         return true;
     }
     return false;
@@ -121,8 +122,8 @@ bool IsEmpty(DLinkList& L){
 #### 判断是否为表尾结点
 
 ```c
-bool IsTail(LinkList& L, LNode* p){
-    if(p->next == L){
+bool IsTail(LinkList &L, LNode *p){
+    if (p -> next == L) {
         return true;
     }
     return false;

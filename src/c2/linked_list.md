@@ -20,22 +20,22 @@ typedef struct LNode{
 #### 不带头结点的单链表
 
 ```c
-LinkList InitLinklist() {
-    Lnode* L = NULL;
-    return L;
+bool InitLinklist(LinkList &L) {
+    L = NULL;
+    return true;
 }
 ```
 
 #### 带头结点的单链表
 
 ```c
-LinkList InitLinkList(){
-    Lnode* L = (Lnode*)malloc(sizeof(LNode));    // 生成一个头结点
-    if( L == NULL){                              // 内存不足，分配失败
+bool InitLinkList(LinkList &L){
+    L = (Lnode*)malloc(sizeof(LNode));    // 生成一个头结点
+    if (L == NULL){                              // 内存不足，分配失败
         return false;
     }
     L -> next = NULL;                             // 头结点之后暂时没有任何结点
-    return L;
+    return true;
 }
 ```
 
@@ -203,12 +203,25 @@ bool ListLNode_Complete_Delete(LinkList &L, int i){
 
 <u>找到需要删除的结点</u>，将其的内容和指向改为下一个元素，相当于用下一个结点<u>替代</u>这个删除结点，清空了内容。
 
+### 清空整个链表
+
+```c
+void ClearLinkList(LinkList &L) {
+    LNode *temp, *temp_next;
+    while (L -> next) {
+        temp = L -> next;
+        L -> next = temp -> next;  // 创建链表的新入口
+        free(temp);
+    }
+}
+```
+
 ### 求表长
 
 ```c
 int LinkListLength(LinkList &L){
     LNode *p = L -> next;
-    int len = 0;
+    int len = 1; // 前面这个L -> next就算一个
     while (p != NULL) { // 遍历并且自加累积器
         p = p -> next;
         len++;
