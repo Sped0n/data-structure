@@ -49,6 +49,8 @@ typedef struct {
     int front, rear;
 } SqQueue;
 ```
+初始条件：blablabla
+操作结果：blablabla
 
 * 初始状态（队列为空）：
 

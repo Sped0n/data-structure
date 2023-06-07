@@ -18,3 +18,6 @@
   - [队列](./c3/queue.md)
   - [应用](./c3/application.md)
 - [广义表](./c4/README.md)
+- [树和二叉树](./c5/README.md)
+  - [基本概念](./c5/tree_basic_concept.md)
+  - [二叉树的遍历与构造](./c5/traversal_and_construction_of_binary_tree.md)
