@@ -137,7 +137,12 @@
 
 完全二叉树和满二叉树采用顺序存储比较合适，但是对于一般的二叉树，为了数组下标能够反映二叉树中结点之间的逻辑关系，只能添加并不存在的空结点，让每个结点与完全二叉树上的结点相对照，再存储到一对数组的相应分量上中。
 
-<u>数据结构代码没有，因为逻辑和存储分离，它数据结构就是数组。</u>
+<u>数据结构代码基本没有，因为逻辑和存储分离，它数据结构就是数组。</u>
+
+```c
+#define MAX_TREE_SIZE 100
+typedef Elemtype SqBT[MAX_TREE_SIZE]
+```
 
 > **树的退化**：
 >
@@ -145,7 +150,7 @@
 
 ![img](https://img.sped0nwen.com/image/2023/06/07/syuj6o-0.webp)
 
-#### 链式存储结构
+#### 链式存储结构（双链）
 
 由于顺序存储空间利用率低，因此二叉树一般采用链式存储结构。链式存储结构是指用一个链表来存储一棵二叉树，<u>二叉树中的每个结点用链表的一个结点来存储</u>。二叉链表至少含有 3 个域：数据域`data`，左指针域`lchild`，右指针域`rchild`。
 
@@ -153,12 +158,25 @@
 
 ![img](https://img.sped0nwen.com/image/2023/06/07/t13pcb-0.webp)
 
-二叉树的链式存储结构：
+二叉树的链式存储结构（双链）：
 
 ```c
-typedef struct LinkBTNode {
+typedef struct BTNode {
     Elemtype data;
-    struct LinkBTNode *lchild, *rchild;
-}LinkBTNode, *LinkBT;
+    struct BTNode *lchild, *rchild;
+}BTNode, *BT;
+```
+
+#### 链式存储结构（三叉链）
+
+![image-20230607201256688](https://img.sped0nwen.com/image/2023/06/07/xak391-0.webp)
+
+![image-20230607201329078](https://img.sped0nwen.com/image/2023/06/07/xapqv1-0.webp)
+
+```c
+typedef struct TriBTNode {
+    Elemtype data;
+    TriBTNode *lchild, *rchild, *parent;
+}TriBTNode, *TriBT;
 ```
 
