@@ -21,3 +21,6 @@
 - [树和二叉树](./c5/README.md)
   - [基本概念](./c5/tree_basic_concept.md)
   - [二叉树的遍历与构造](./c5/traversal_and_construction_of_binary_tree.md)
+  - [线索二叉树](./c5/thread_binary_tree.md)
+  - [树和森林](./c5/tree_and_forest.md)
+  - [哈夫曼树](./c5/huffman_tree.md)

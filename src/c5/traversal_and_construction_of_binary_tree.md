@@ -194,73 +194,99 @@ void levelOrder(BT &T, void(*visit)(BTNode &TNode)) {
 
 思路：我们知道先序序列的第一个值其实就是根节点的值，这样我们就可以在中序序列中找到对应的根节点，那么根节点左边的数就全为左子树的结点，根节点右边的数就全为右子树的结点。根据这个想法，再递归的进行构造，见代码。
 
-在C语言中，可以通过指针和递归实现根据先序和中序序列构造一棵二叉树。
-
 以下是实现的思路：
 
 1. 先序序列的第一个元素是当前树的根节点。
-2. 在中序序列中查找根节点，根节点左边的元素是当前树的左子树，右边的元素是当前树的右子树。
+2. 在中序序列中查找根节点，根节点左边的元素是当前树的左子树，右边的元素是当前树的右子树。(如果不是同时有左右孩子，则作废)
 3. 递归构造左子树和右子树。
-
-下面是实现的代码：
 
 ```c
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct TreeNode {
-    int val;
-    struct TreeNode *left;
-    struct TreeNode *right;
-} TreeNode;
+typedef struct BTNode {
+    Elemtype data;
+    struct BTNode *lchild, *rchild;
+}BTNode, *BT;
 
-// 在中序序列中查找根节点
-int findIndex(int* inorder, int inorderSize, int val) {
-    for (int i = 0; i < inorderSize; i++) {
-        if (inorder[i] == val) {
+int len(int &list) {
+    if (list == NULL) {
+        return -1;
+    }
+    return sizeof(list) / sizeof(list[0]);
+}
+
+int findIndex(int &list, int val){
+    int count = len(list)
+    for (int i = 0; i < count; i++) {
+        if (list[i] == val) {
             return i;
         }
     }
     return -1;
 }
 
-// 构造二叉树
-TreeNode* buildTree(int* preorder, int preorderSize, int* inorder, int inorderSize) {
-    if (preorderSize == 0 || inorderSize == 0) { // 如果序列已经为空，返回NULL
-        return NULL;
+BTNode *BuildTree(int &preorder, int &inorder, int pL, int pR, int iL, int iR) {
+    int rootIndex = findIndex(inorder, preorder[pL]);
+    BTNode *root = (BTNode*)malloc(sizeof(BTNode));
+    root -> data = preorder[pL];
+    int leftCount = rootIndex - iL;
+    // 递归前序遍历第二个到左半，中序遍历左半
+    root -> left = BuildTree(preorder, inorder, pL + 1, pL + leftCount, iL, rootIndex - 1);
+    // 递归前序遍历右半，中序遍历中间到右半
+    root -> right = BuildTree(preorder, inorder, pL + leftCount + 1, pR, rootIndex + 1, iR);
+    return root;
+}
+
+void main {
+    BuildTree(preorder, inorder, 0, len(preorder) - 1, 0, len(inorder) - 1);
+}
+```
+
+### 后序和中序构建
+
+我们知道后序序列的最后一个值其实就是根节点的值，这样我们就可以在中序序列中找到对应的根节点，那么根节点左边的数就全为左子树的结点，根节点右边的数就全为右子树的结点。根据这个想法，再递归的进行构造，见代码。
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct BTNode {
+    Elemtype data;
+    struct BTNode *lchild, *rchild;
+}BTNode, *BT;
+
+int len(int &list) {
+    if (list == NULL) {
+        return -1;
     }
-    TreeNode* root = (TreeNode*) malloc(sizeof(TreeNode)); // 创建根结点
-    root->val = preorder[0]; // 先序序列的第一个元素是当前树的根
-    int rootIndex = findIndex(inorder, inorderSize, root->val); // 在中序序列中查找根结点
-    root->left = buildTree(preorder + 1, rootIndex, inorder, rootIndex); // 递归构造左子树
-    root->right = buildTree(preorder + rootIndex + 1, preorderSize - rootIndex - 1,
-                            inorder + rootIndex + 1, inorderSize - rootIndex - 1); // 递归构造右子树
-    return root; // 返回根结点
+    return sizeof(list) / sizeof(list[0]);
 }
 
-// 打印二叉树
-void printTree(TreeNode* root) {
-    if (root == NULL) {
-        return;
+int findIndex(int &list, int val){
+    int count = len(list)
+    for (int i = 0; i < count; i++) {
+        if (list[i] == val) {
+            return i;
+        }
     }
-    printf("%d ", root->val); // 打印根结点的值
-    printTree(root->left); // 打印左子树
-    printTree(root->right); // 打印右子树
+    return -1;
 }
 
-int main() {
-    int preorder[] = {1, 2, 4, 5, 3, 6, 7};
-    int inorder[] = {4, 2, 5, 1, 6, 3, 7};
-    int n = sizeof(preorder) / sizeof(preorder[0]);
-    TreeNode* root = buildTree(preorder, n, inorder, n);
-    printf("树的先序遍历结果为：");
-    printTree(root);
-    return 0;
+BTNode *BuildTree(int &postorder, int &inorder, int pL, int pR, int iL, int iR) {
+    int rootIndex = findIndex(inorder, postorder[pR]);
+    BTNode *root = (BTNode*)malloc(sizeof(BTNode));
+    root -> data = postorder[pR];
+    int rightCount = iR - rootIndex;
+    // 递归前序遍历第二个到左半，中序遍历左半
+    root -> left = BuildTree(postorder, inorder, pL, pR - rightCount - 1, iL, rootIndex - 1);
+    // 递归前序遍历右半，中序遍历中间到右半
+    root -> right = BuildTree(postorder, inorder, pR - rightCount, pR - 1, rootIndex + 1, iR);
+    return root;
+}
+
+void main {
+    BuildTree(preorder, inorder, 0, len(preorder) - 1, 0, len(inorder) - 1);
 }
 ```
 
-以上代码中的 `buildTree` 函数可以根据先序序列和中序序列构造一个二叉树，`printTree` 函数可以打印一颗二叉树。在 `main` 函数中，我创建了一个包含7个结点的二叉树，并打印了它的先序遍历结果。输出结果如下：
-
-```
-树的先序遍历结果为：1 2 4 5 3 6 7
-```
