@@ -25,4 +25,5 @@
   - [树和森林](./c5/tree_and_forest.md)
   - [哈夫曼树](./c5/huffman_tree.md)
 - [图](./c6/README.md)
-  - [基本概念](./c6/graph_basic_concept)
+  - [基本概念](./c6/graph_basic_concept.md)
+  - [图的存储结构及基本操作](./c6/graph_basic_struct_and_ops.md)
