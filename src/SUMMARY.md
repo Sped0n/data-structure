@@ -31,3 +31,8 @@
 - [查找算法](./c7/README.md)
   - [顺序查找](./c7/seq_search.md)
   - [二分查找](./c7/divhalf_search.md)
+- [排序算法](./c8/README.md)
+  - [插入排序算法](./c8/insertion_sort.md)
+  - [冒泡排序算法](./c8/bubble_sort.md)
+  - [快速排序算法](./c8/quick_sort.md) 
+  - [各类排序算法的稳定性](./c8/sort_stability.md)
