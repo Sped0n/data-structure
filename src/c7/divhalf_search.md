@@ -9,7 +9,7 @@ int binary_search(int arr[], int x) {
     if (sizeof(arr[0]) == 0) {
         return -1;
     }
-    int end = sizeof(arr)/sizeof(arr[0]) - 1;
+    int end = sizeof(arr) / sizeof(arr[0]) - 1;
     int start = 0;
     while (start <= end) {
         int mid = (start + end) / 2;

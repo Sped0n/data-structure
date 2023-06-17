@@ -10,7 +10,7 @@ int search(int arr[], int x)
     if (sizeof(arr[0]) == 0) {
         return -1;             // 数组为空
     }
-    int n = sizeof(arr)/sizeof(arr[0]);
+    int n = sizeof(arr) / sizeof(arr[0]);
     for(int i = 0; i < n; i++)
     {
         if(arr[i] == x)
