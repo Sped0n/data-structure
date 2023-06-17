@@ -24,3 +24,5 @@
   - [线索二叉树](./c5/thread_binary_tree.md)
   - [树和森林](./c5/tree_and_forest.md)
   - [哈夫曼树](./c5/huffman_tree.md)
+- [图](./c6/README.md)
+  - [基本概念](./c6/graph_basic_concept)
