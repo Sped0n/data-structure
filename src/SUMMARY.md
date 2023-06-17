@@ -27,3 +27,7 @@
 - [图](./c6/README.md)
   - [基本概念](./c6/graph_basic_concept.md)
   - [图的存储结构及基本操作](./c6/graph_basic_struct_and_ops.md)
+  - [图的遍历](./c6/graph_traversal.md)
+- [查找算法](./c7/README.md)
+  - [顺序查找](./c7/seq_search.md)
+  - [二分查找](./c7/divhalf_search.md)
