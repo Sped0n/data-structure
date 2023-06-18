@@ -96,8 +96,8 @@
   简单例子：
 
   ```c
-  for (int i = 0; i < 2^n; i++) {
-    	n++;
+  for (int i = 0; i < 2 ^ n; i++) {
+      n++;
   }
   ```
 
@@ -105,13 +105,14 @@
 
   ```c
   void hanoi(int n, char x, char y, char z) { 
-      if(n == 1)
-    		cout<<x<<z; 
+      if (n == 1) {
+          cout<<x<<z; 
+      }
       else {
-    		hanoi(n - 1, x, z, y); 
-        cout<<x, z; 
-        hanoi(n - 1, y ,x ,z);
-    	} 
+          hanoi(n - 1, x, z, y); 
+          cout<<x, z; 
+          hanoi(n - 1, y ,x ,z);
+      } 
     }
   ```
 	时间复杂度取决于递归的深度，也就是问题规模$n$的大小。
